@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Marek\Mailtrap\API\Value\Response;
 
-use IteratorAggregate;
 use ArrayIterator;
+use IteratorAggregate;
+
+use function array_filter;
+use function count;
 
 final class Inboxes implements IteratorAggregate
 {
@@ -35,7 +38,7 @@ final class Inboxes implements IteratorAggregate
      */
     public function getInboxByName(string $name): array
     {
-        return array_filter($this->inboxes, static function(Inbox $inbox) use ($name) {
+        return array_filter($this->inboxes, static function (Inbox $inbox) use ($name) {
             if ($inbox->name === $name) {
                 return $inbox;
             }

@@ -18,13 +18,13 @@ final class UpdateProject
         $this->projectId = $projectId;
     }
 
-    public function getProjectId(): ProjectId
-    {
-        return $this->projectId;
-    }
-
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    public function getProjectId(): ProjectId
+    {
+        return $this->projectId;
     }
 }

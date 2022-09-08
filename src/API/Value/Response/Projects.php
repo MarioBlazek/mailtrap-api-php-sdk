@@ -6,6 +6,8 @@ namespace Marek\Mailtrap\API\Value\Response;
 
 use IteratorAggregate;
 
+use function count;
+
 final class Projects implements IteratorAggregate
 {
     /**

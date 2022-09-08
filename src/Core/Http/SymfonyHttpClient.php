@@ -23,6 +23,13 @@ use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface as SymfonyHttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
+use function count;
+use function in_array;
+use function json_encode;
+use function sprintf;
+
+use const JSON_THROW_ON_ERROR;
+
 final class SymfonyHttpClient implements HttpClientInterface
 {
     private SymfonyHttpClientInterface $httpClient;
@@ -78,7 +85,7 @@ final class SymfonyHttpClient implements HttpClientInterface
 
     private function getUrl(string $uri): string
     {
-        return sprintf("%s%s", $this->baseUrl, $uri);
+        return sprintf('%s%s', $this->baseUrl, $uri);
     }
 
     /**
@@ -92,8 +99,8 @@ final class SymfonyHttpClient implements HttpClientInterface
     {
         $options = [
             'headers' => [
-                'Api-Token' => (string)$this->apiToken,
-                'Content-Type' => 'application/json'
+                'Api-Token' => (string) $this->apiToken,
+                'Content-Type' => 'application/json',
             ],
         ];
 
@@ -104,7 +111,7 @@ final class SymfonyHttpClient implements HttpClientInterface
         $response = $this->httpClient->request(
             $method,
             $this->getUrl($uri),
-            $options
+            $options,
         );
 
         $this->checkResponseAndThrowIfNecessary($response);
@@ -130,22 +137,31 @@ final class SymfonyHttpClient implements HttpClientInterface
         switch ($statusCode) {
             case 400:
                 throw new BadRequestException();
+
             case 401:
                 throw new UnauthorizedException();
+
             case 403:
                 throw new ForbiddenException();
+
             case 404:
                 throw new NotFoundException();
+
             case 405:
                 throw new MethodNotAllowedException();
+
             case 406:
                 throw new NotAcceptableException();
+
             case 409:
                 throw new ConflictException();
+
             case 422:
                 throw new UnprocessableEntityException();
+
             case 429:
                 throw new TooManyRequestsException();
+
             default:
                 throw new NetworkException();
         }

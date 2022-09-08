@@ -8,7 +8,7 @@ use Throwable;
 
 final class MethodNotAllowedException extends BaseException
 {
-    public function __construct(string $message = "Requested method is not supported for resource", int $code = 0, Throwable $previous = null)
+    public function __construct(string $message = 'Requested method is not supported for resource', int $code = 0, ?Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }

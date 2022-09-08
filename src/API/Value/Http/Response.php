@@ -6,5 +6,4 @@ namespace Marek\Mailtrap\API\Value\Http;
 
 final class Response
 {
-
 }

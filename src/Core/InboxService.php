@@ -7,15 +7,17 @@ namespace Marek\Mailtrap\Core;
 use Marek\Mailtrap\API\Exception\Inbox\InboxNotFoundException;
 use Marek\Mailtrap\API\Exception\Network\NotFoundException;
 use Marek\Mailtrap\API\Exception\Serializer\ResponseCantBeDeserializedException;
+use Marek\Mailtrap\API\Http\HttpClientInterface;
 use Marek\Mailtrap\API\Http\HttpResponseInterface;
+use Marek\Mailtrap\API\InboxService as APIInboxService;
 use Marek\Mailtrap\API\Value\Request\InboxId;
 use Marek\Mailtrap\API\Value\Request\UpdateInbox;
 use Marek\Mailtrap\API\Value\Response\Inbox;
 use Marek\Mailtrap\API\Value\Response\Inboxes;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Marek\Mailtrap\API\Http\HttpClientInterface;
-use Marek\Mailtrap\API\InboxService as APIInboxService;
+
+use function str_replace;
 
 final class InboxService implements APIInboxService
 {
@@ -51,7 +53,7 @@ final class InboxService implements APIInboxService
      */
     public function getInbox(InboxId $inboxId): Inbox
     {
-        $uri = str_replace('inbox_id', (string)$inboxId->getId(), self::URI_INBOX);
+        $uri = str_replace('inbox_id', (string) $inboxId->getId(), self::URI_INBOX);
         $response = $this->httpClient->get($uri);
 
         return $this->denormalizeInbox($response);
@@ -63,12 +65,12 @@ final class InboxService implements APIInboxService
      */
     public function updateInbox(UpdateInbox $updateInbox): Inbox
     {
-        $uri = str_replace('inbox_id', (string)$updateInbox->getInboxId()->getId(), self::URI_INBOX);
+        $uri = str_replace('inbox_id', (string) $updateInbox->getInboxId()->getId(), self::URI_INBOX);
         $body = [
             'inbox' => [
                 'name' => $updateInbox->getName(),
                 'email_username' => $updateInbox->getEmailUsername() ?? '',
-            ]
+            ],
         ];
 
         try {
@@ -82,7 +84,7 @@ final class InboxService implements APIInboxService
 
     public function deleteInbox(InboxId $inboxId): void
     {
-        $uri = str_replace('inbox_id', (string)$inboxId->getId(), self::URI_INBOX);
+        $uri = str_replace('inbox_id', (string) $inboxId->getId(), self::URI_INBOX);
 
         try {
             $this->httpClient->delete($uri);
@@ -142,7 +144,7 @@ final class InboxService implements APIInboxService
      */
     private function patch(string $uri, InboxId $inboxId): Inbox
     {
-        $uri = str_replace('inbox_id', (string)$inboxId->getId(), $uri);
+        $uri = str_replace('inbox_id', (string) $inboxId->getId(), $uri);
 
         try {
             $response = $this->httpClient->patch($uri);
@@ -159,7 +161,7 @@ final class InboxService implements APIInboxService
     private function denormalizeInbox(HttpResponseInterface $response): Inbox
     {
         try {
-             $inbox = $this->serializer->denormalize($response->getContent(), Inbox::class);
+            $inbox = $this->serializer->denormalize($response->getContent(), Inbox::class);
         } catch (ExceptionInterface $exception) {
             throw new ResponseCantBeDeserializedException();
         }

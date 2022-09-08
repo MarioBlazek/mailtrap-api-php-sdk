@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Marek\Mailtrap\Core\Http;
 
+use JsonException;
 use Marek\Mailtrap\API\Exception\Serializer\ResponseCantBeDeserializedException;
 use Marek\Mailtrap\API\Http\HttpResponseInterface;
 use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
-use JsonException;
+
 use function json_decode;
+
+use const JSON_THROW_ON_ERROR;
 
 final class SymfonyResponse implements HttpResponseInterface
 {

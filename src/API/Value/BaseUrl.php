@@ -16,13 +16,13 @@ final class BaseUrl
         $this->url = $url;
     }
 
-    public static function createFromString(string $url): self
-    {
-        return new self($url);
-    }
-
     public function __toString(): string
     {
         return $this->url;
+    }
+
+    public static function createFromString(string $url): self
+    {
+        return new self($url);
     }
 }

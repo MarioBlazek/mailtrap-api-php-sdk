@@ -6,5 +6,4 @@ namespace Marek\Mailtrap\API\Exception\Network;
 
 final class NetworkException extends BaseException
 {
-
 }

@@ -13,61 +13,61 @@ use Marek\Mailtrap\API\Value\Response\Inboxes;
 interface InboxService
 {
     /**
-     * Get a list of inboxes
+     * Get a list of inboxes.
      */
     public function getInboxes(): Inboxes;
 
     /**
-     * Get inbox
+     * Get inbox.
      *
      * @throws InboxNotFoundException
      */
     public function getInbox(InboxId $inboxId): Inbox;
 
     /**
-     * Update inbox
+     * Update inbox.
      *
      * @throws InboxNotFoundException
      */
     public function updateInbox(UpdateInbox $updateInbox): Inbox;
 
     /**
-     * Delete inbox
+     * Delete inbox.
      *
      * @throws InboxNotFoundException
      */
     public function deleteInbox(InboxId $inboxId): void;
 
     /**
-     * Delete all messages (emails) from inbox
+     * Delete all messages (emails) from inbox.
      *
      * @throws InboxNotFoundException
      */
     public function clean(InboxId $inboxId): Inbox;
 
     /**
-     * Mark all messages (emails) as read
+     * Mark all messages (emails) as read.
      *
      * @throws InboxNotFoundException
      */
     public function markAllMessagesAsRead(InboxId $inboxId): Inbox;
 
     /**
-     * Reset inbox credentials
+     * Reset inbox credentials.
      *
      * @throws InboxNotFoundException
      */
     public function resetCredentials(InboxId $inboxId): Inbox;
 
     /**
-     * Reset inbox email address
+     * Reset inbox email address.
      *
      * @throws InboxNotFoundException
      */
     public function resetEmailUsername(InboxId $inboxId): Inbox;
 
     /**
-     * Enable/disable retrieval of messages in this inbox to the specified email address
+     * Enable/disable retrieval of messages in this inbox to the specified email address.
      *
      * @throws InboxNotFoundException
      */

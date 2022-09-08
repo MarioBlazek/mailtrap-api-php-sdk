@@ -17,5 +17,6 @@ interface HttpClientInterface
      * @param array<mixed> $body
      */
     public function patch(string $uri, array $body = []): HttpResponseInterface;
+
     public function delete(string $uri): HttpResponseInterface;
 }

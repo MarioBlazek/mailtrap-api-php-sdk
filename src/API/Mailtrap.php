@@ -7,5 +7,6 @@ namespace Marek\Mailtrap\API;
 interface Mailtrap
 {
     public function getInboxService(): InboxService;
+
     public function getProjectService(): ProjectService;
 }
