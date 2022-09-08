@@ -1,0 +1,30 @@
+name: Static analysis
+
+on:
+    push:
+        branches:
+            - 'main'
+    pull_request: ~
+
+env:
+    COMPOSER_ROOT_VERSION: dev-master
+
+jobs:
+    static-analysis:
+        name: ${{ matrix.script }}
+        runs-on: ubuntu-latest
+
+        strategy:
+            fail-fast: false
+            matrix:
+                script: ['phpstan']
+
+        steps:
+            - uses: actions/checkout@v2
+            - uses: shivammathur/setup-php@v2
+              with:
+                  php-version: '7.4'
+                  coverage: none
+
+            - run: composer update --prefer-dist
+            - run: composer ${{ matrix.script }}
