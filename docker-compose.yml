@@ -1,0 +1,6 @@
+version: '3'
+
+services:
+    php:
+        build: .
+        image: marioblazek/mailtrap-api-php-sdk-cli:latest

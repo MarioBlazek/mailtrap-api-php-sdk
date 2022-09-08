@@ -1,0 +1,55 @@
+{
+  "name": "marioblazek/mailtrap-api-php-sdk",
+  "description": "PHP SDK for the Mailtrap API",
+  "keywords": [
+    "api",
+    "sdk",
+    "mailtrap"
+  ],
+  "homepage": "https://github.com/marioblazek/mailtrap-api-php-sdk",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Mario Blažek",
+      "email": "blazek.mario@gmail.com",
+      "homepage": "https://marioblazek.github.io/"
+    }
+  ],
+  "require": {
+    "php": "^7.4|^8.0",
+    "symfony/http-client": "~4.0",
+    "symfony/serializer": "~4.0",
+    "symfony/property-access": "~4.0",
+    "symfony/property-info": "~4.0",
+    "phpdocumentor/reflection-docblock": "~5.0",
+    "beberlei/assert": "~3.3"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-latest",
+    "phpunit/phpunit": "^8.0",
+    "symfony/var-dumper": "~4.0",
+    "symfony/mailer": "~5.0",
+    "fakerphp/faker": "^1.20"
+  },
+  "autoload": {
+    "psr-4": {
+      "Marek\\Mailtrap\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Marek\\Mailtrap\\Tests\\": "tests"
+    }
+  },
+  "scripts": {
+    "test": "@php vendor/bin/phpunit --colors=always"
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.0-dev"
+    }
+  }
+}
