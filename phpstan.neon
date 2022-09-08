@@ -1,0 +1,16 @@
+includes:
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
+    - vendor/phpstan/phpstan-symfony/extension.neon
+    - vendor/phpstan/phpstan-symfony/rules.neon
+
+parameters:
+    treatPhpDocTypesAsCertain: false
+    checkGenericClassInNonGenericObjectType: false
+    ignoreErrors:
+        -
+                message: '/Parameter #2 \$serializer of class Marek\\Mailtrap\\Core\\InboxService constructor expects Symfony\\Component\\Serializer\\Normalizer\\DenormalizerInterface, Symfony\\Component\\Serializer\\SerializerInterface given/'
+                path: src/Core/Factory/InboxServiceFactory.php
+
+        -
+                message: '/Parameter #2 \$serializer of class Marek\\Mailtrap\\Core\\ProjectService constructor expects Symfony\\Component\\Serializer\\Normalizer\\DenormalizerInterface, Symfony\\Component\\Serializer\\SerializerInterface given/'
+                path: src/Core/Factory/ProjectServiceFactory.php

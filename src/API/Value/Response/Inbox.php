@@ -26,7 +26,15 @@ final class Inbox
     public int $emailsUnreadCount;
     public ?string $lastMessageSentAt;
 //    public ?\DateTimeImmutable $lastMessageSentAt;
+
+    /**
+     * @var array<int>
+     */
     public array $smtpPorts = [];
+
+    /**
+     * @var  array<int>
+     */
     public array $pop3Ports = [];
     public int $maxMessageSize;
     public bool $hasInboxAddress;

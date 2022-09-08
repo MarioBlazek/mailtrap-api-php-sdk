@@ -7,12 +7,13 @@ namespace Marek\Mailtrap\Core;
 use Marek\Mailtrap\API\Exception\Inbox\InboxNotFoundException;
 use Marek\Mailtrap\API\Exception\Network\NotFoundException;
 use Marek\Mailtrap\API\Exception\Serializer\ResponseCantBeDeserializedException;
+use Marek\Mailtrap\API\Http\HttpResponseInterface;
 use Marek\Mailtrap\API\Value\Request\InboxId;
 use Marek\Mailtrap\API\Value\Request\UpdateInbox;
 use Marek\Mailtrap\API\Value\Response\Inbox;
 use Marek\Mailtrap\API\Value\Response\Inboxes;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
-use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Marek\Mailtrap\API\Http\HttpClientInterface;
 use Marek\Mailtrap\API\InboxService as APIInboxService;
 
@@ -27,9 +28,9 @@ final class InboxService implements APIInboxService
     private const URI_INBOX_TOGGLE_EMAIL_USERNAME = '/api/v1/inboxes/inbox_id/toggle_email_username';
 
     private HttpClientInterface $httpClient;
-    private SerializerInterface $serializer;
+    private DenormalizerInterface $serializer;
 
-    public function __construct(HttpClientInterface $httpClient, SerializerInterface $serializer)
+    public function __construct(HttpClientInterface $httpClient, DenormalizerInterface $serializer)
     {
         $this->httpClient = $httpClient;
         $this->serializer = $serializer;
@@ -43,7 +44,7 @@ final class InboxService implements APIInboxService
         $response = $this->httpClient->get(self::URI_INBOXES);
 
         $inboxes = [];
-        foreach ($response as $item) {
+        foreach ($response->getContent() as $item) {
             $inboxes[] = $this->denormalizeInbox($item);
         }
 
@@ -160,18 +161,14 @@ final class InboxService implements APIInboxService
     /**
      * @throws ResponseCantBeDeserializedException
      */
-    private function denormalizeInbox(array $response): Inbox
+    private function denormalizeInbox(HttpResponseInterface $response): Inbox
     {
         try {
-             $inbox = $this->serializer->denormalize($response, Inbox::class);
+             $inbox = $this->serializer->denormalize($response->getContent(), Inbox::class);
         } catch (ExceptionInterface $exception) {
             throw new ResponseCantBeDeserializedException();
         }
 
-        if ($inbox instanceof Inbox) {
-            return $inbox;
-        }
-
-        throw new ResponseCantBeDeserializedException();
+        return $inbox;
     }
 }

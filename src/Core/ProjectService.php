@@ -7,6 +7,7 @@ namespace Marek\Mailtrap\Core;
 use Marek\Mailtrap\API\Exception\Network\NotFoundException;
 use Marek\Mailtrap\API\Exception\Project\ProjectNotFoundException;
 use Marek\Mailtrap\API\Exception\Serializer\ResponseCantBeDeserializedException;
+use Marek\Mailtrap\API\Http\HttpResponseInterface;
 use Marek\Mailtrap\API\Value\Request\InboxName;
 use Marek\Mailtrap\API\Value\Request\CreateProject;
 use Marek\Mailtrap\API\Value\Request\ProjectId;
@@ -15,7 +16,7 @@ use Marek\Mailtrap\API\Value\Response\Inbox;
 use Marek\Mailtrap\API\Value\Response\Project;
 use Marek\Mailtrap\API\Value\Response\Projects;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
-use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Marek\Mailtrap\API\Http\HttpClientInterface;
 use Marek\Mailtrap\API\ProjectService as APIProjectService;
 
@@ -26,9 +27,9 @@ final class ProjectService implements APIProjectService
     private const URI_PROJECT_INBOXES = '/api/v1/companies/project_id/inboxes';
 
     private HttpClientInterface $client;
-    private SerializerInterface $serializer;
+    private DenormalizerInterface $serializer;
 
-    public function __construct(HttpClientInterface $client, SerializerInterface $serializer)
+    public function __construct(HttpClientInterface $client, DenormalizerInterface $serializer)
     {
         $this->client = $client;
         $this->serializer = $serializer;
@@ -42,7 +43,7 @@ final class ProjectService implements APIProjectService
         $response = $this->client->get(self::URI_PROJECTS);
 
         $projects = [];
-        foreach ($response as $item) {
+        foreach ($response->getContent() as $item) {
             $projects[] = $this->denormalizeProject($item);
         }
 
@@ -138,7 +139,7 @@ final class ProjectService implements APIProjectService
     /**
      * @throws ResponseCantBeDeserializedException
      */
-    private function denormalizeProject(array $response): Project
+    private function denormalizeProject(HttpResponseInterface $response): Project
     {
         try {
             $project = $this->serializer->denormalize($response, Project::class);
@@ -146,28 +147,20 @@ final class ProjectService implements APIProjectService
             throw new ResponseCantBeDeserializedException();
         }
 
-        if ($project instanceof Project) {
-            return $project;
-        }
-
-        throw new ResponseCantBeDeserializedException();
+        return $project;
     }
 
     /**
      * @throws ResponseCantBeDeserializedException
      */
-    private function denormalizeInbox(array $response): Inbox
+    private function denormalizeInbox(HttpResponseInterface $response): Inbox
     {
         try {
-            $inbox = $this->serializer->denormalize($response, Inbox::class);
+            $inbox = $this->serializer->denormalize($response->getContent(), Inbox::class);
         } catch (ExceptionInterface $exception) {
             throw new ResponseCantBeDeserializedException();
         }
 
-        if ($inbox instanceof Inbox) {
-            return $inbox;
-        }
-
-        throw new ResponseCantBeDeserializedException();
+        return $inbox;
     }
 }

@@ -17,19 +17,23 @@
   ],
   "require": {
     "php": "^7.4|^8.0",
-    "symfony/http-client": "~4.0",
-    "symfony/serializer": "~4.0",
-    "symfony/property-access": "~4.0",
-    "symfony/property-info": "~4.0",
+    "symfony/http-client": "^4.4 ||^5.4 || ^6.0",
+    "symfony/serializer": "^4.4 ||^5.4 || ^6.0",
+    "symfony/property-access": "^4.4 ||^5.4 || ^6.0",
+    "symfony/property-info": "^4.4 ||^5.4 || ^6.0",
     "phpdocumentor/reflection-docblock": "~5.0",
     "beberlei/assert": "~3.3"
   },
   "require-dev": {
     "roave/security-advisories": "dev-latest",
     "phpunit/phpunit": "^8.0",
-    "symfony/var-dumper": "~4.0",
-    "symfony/mailer": "~5.0",
-    "fakerphp/faker": "^1.20"
+    "symfony/var-dumper": "^4.4 ||^5.4 || ^6.0",
+    "symfony/mailer": "^4.4 ||^5.4 || ^6.0",
+    "fakerphp/faker": "^1.20",
+    "phpstan/phpstan": "^1.2",
+    "phpstan/phpstan-strict-rules": "^1.1",
+    "phpstan/phpstan-symfony": "^1.0",
+    "phpstan/phpstan-phpunit": "^1.0"
   },
   "autoload": {
     "psr-4": {
@@ -42,7 +46,8 @@
     }
   },
   "scripts": {
-    "test": "@php vendor/bin/phpunit --colors=always"
+    "test": "@php vendor/bin/phpunit --colors=always",
+     "phpstan": "@php vendor/bin/phpstan analyse -c phpstan.neon --level=8 --ansi src"
   },
   "config": {
     "sort-packages": true

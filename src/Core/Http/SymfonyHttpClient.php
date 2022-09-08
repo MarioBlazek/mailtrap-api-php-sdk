@@ -16,6 +16,7 @@ use Marek\Mailtrap\API\Exception\Network\TooManyRequestsException;
 use Marek\Mailtrap\API\Exception\Network\UnauthorizedException;
 use Marek\Mailtrap\API\Exception\Network\UnprocessableEntityException;
 use Marek\Mailtrap\API\Http\HttpClientInterface;
+use Marek\Mailtrap\API\Http\HttpResponseInterface;
 use Marek\Mailtrap\API\Value\Authentication\ApiToken;
 use Marek\Mailtrap\API\Value\BaseUrl;
 use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
@@ -35,7 +36,12 @@ final class SymfonyHttpClient implements HttpClientInterface
         $this->baseUrl = $baseUrl;
     }
 
-    public function get(string $uri): array
+    /**
+     * @throws BaseException
+     * @throws \Marek\Mailtrap\API\Exception\Serializer\ResponseCantBeDeserializedException
+     * @throws \JsonException
+     */
+    public function get(string $uri): HttpResponseInterface
     {
         return $this->doRequest('GET', $uri);
     }
@@ -43,18 +49,29 @@ final class SymfonyHttpClient implements HttpClientInterface
     /**
      * @throws BaseException
      * @throws \JsonException
+     * @throws \Marek\Mailtrap\API\Exception\Serializer\ResponseCantBeDeserializedException
      */
-    public function post(string $uri, array $body = []): array
+    public function post(string $uri, array $body = []): HttpResponseInterface
     {
         return $this->doRequest('POST', $uri, $body);
     }
 
-    public function patch(string $uri, array $body = []): array
+    /**
+     * @throws BaseException
+     * @throws \Marek\Mailtrap\API\Exception\Serializer\ResponseCantBeDeserializedException
+     * @throws \JsonException
+     */
+    public function patch(string $uri, array $body = []): HttpResponseInterface
     {
         return $this->doRequest('PATCH', $uri, $body);
     }
 
-    public function delete(string $uri): array
+    /**
+     * @throws BaseException
+     * @throws \Marek\Mailtrap\API\Exception\Serializer\ResponseCantBeDeserializedException
+     * @throws \JsonException
+     */
+    public function delete(string $uri): HttpResponseInterface
     {
         return $this->doRequest('DELETE', $uri);
     }
@@ -65,10 +82,13 @@ final class SymfonyHttpClient implements HttpClientInterface
     }
 
     /**
+     * @param array<mixed> $body
+     *
      * @throws \JsonException
      * @throws BaseException
+     * @throws \Marek\Mailtrap\API\Exception\Serializer\ResponseCantBeDeserializedException
      */
-    private function doRequest(string $method, string $uri, array $body = []): array
+    private function doRequest(string $method, string $uri, array $body = []): HttpResponseInterface
     {
         $options = [
             'headers' => [
@@ -89,7 +109,7 @@ final class SymfonyHttpClient implements HttpClientInterface
 
         $this->checkResponseAndThrowIfNecessary($response);
 
-        return json_decode($response->getContent(), true, 512, JSON_THROW_ON_ERROR);
+        return SymfonyResponse::createFromSymfonyResponse($response);
     }
 
     /**

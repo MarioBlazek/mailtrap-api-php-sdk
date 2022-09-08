@@ -16,6 +16,9 @@ final class Inboxes implements IteratorAggregate
 
     public int $count = 0;
 
+    /**
+     * @param Inbox[] $inboxes
+     */
     public function __construct(array $inboxes)
     {
         $this->inboxes = $inboxes;
