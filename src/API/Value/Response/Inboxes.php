@@ -29,4 +29,16 @@ final class Inboxes implements IteratorAggregate
     {
         return new ArrayIterator($this->inboxes);
     }
+
+    /**
+     * @return array<Inbox>
+     */
+    public function getInboxByName(string $name): array
+    {
+        return array_filter($this->inboxes, static function(Inbox $inbox) use ($name) {
+            if ($inbox->name === $name) {
+                return $inbox;
+            }
+        });
+    }
 }

@@ -43,12 +43,7 @@ final class InboxService implements APIInboxService
     {
         $response = $this->httpClient->get(self::URI_INBOXES);
 
-        $inboxes = [];
-        foreach ($response->getContent() as $item) {
-            $inboxes[] = $this->denormalizeInbox($item);
-        }
-
-        return new Inboxes($inboxes);
+        return $this->denormalizeInboxes($response);
     }
 
     /**
@@ -170,5 +165,23 @@ final class InboxService implements APIInboxService
         }
 
         return $inbox;
+    }
+
+    /**
+     * @throws ResponseCantBeDeserializedException
+     */
+    private function denormalizeInboxes(HttpResponseInterface $response): Inboxes
+    {
+        $inboxes = [];
+
+        try {
+            foreach ($response->getContent() as $item) {
+                $inboxes[] = $this->serializer->denormalize($item, Inbox::class);
+            }
+        } catch (ExceptionInterface $exception) {
+            throw new ResponseCantBeDeserializedException();
+        }
+
+        return new Inboxes($inboxes);
     }
 }
