@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Marek\Mailtrap\API\Value\Response;
 
+use function end;
 use function sprintf;
 
 final class Inbox
@@ -48,7 +49,7 @@ final class Inbox
             $this->username,
             $this->password,
             $this->domain,
-            end($this->smtpPorts)
+            end($this->smtpPorts),
         );
     }
 }
