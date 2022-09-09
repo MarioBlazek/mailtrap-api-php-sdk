@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Marek\Mailtrap\API\Value\Response;
 
+use function sprintf;
+
 final class Inbox
 {
     public int $id;
@@ -38,4 +40,15 @@ final class Inbox
     public array $pop3Ports = [];
     public int $maxMessageSize;
     public bool $hasInboxAddress;
+
+    public function getSmtpDsn(): string
+    {
+        return sprintf(
+            'smtp://%s:%s@%s:%d?encryption=tls&auth_mode=login',
+            $this->username,
+            $this->password,
+            $this->domain,
+            end($this->smtpPorts)
+        );
+    }
 }
