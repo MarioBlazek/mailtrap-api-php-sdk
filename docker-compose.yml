@@ -4,3 +4,7 @@ services:
     php:
         build: .
         image: marioblazek/mailtrap-api-php-sdk-cli:latest
+        volumes:
+            - "./:/srv/app"
+        ports:
+            - "8000:8000"
