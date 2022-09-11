@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Marek\Mailtrap\Core\Http;
 
+use Marek\Mailtrap\API\Exception\Network\APIException;
 use Marek\Mailtrap\API\Exception\Network\BadRequestException;
-use Marek\Mailtrap\API\Exception\Network\BaseException;
 use Marek\Mailtrap\API\Exception\Network\ConflictException;
 use Marek\Mailtrap\API\Exception\Network\ForbiddenException;
 use Marek\Mailtrap\API\Exception\Network\MethodNotAllowedException;
@@ -44,7 +44,7 @@ final class SymfonyHttpClient implements HttpClientInterface
     }
 
     /**
-     * @throws BaseException
+     * @throws APIException
      * @throws \Marek\Mailtrap\API\Exception\Serializer\ResponseCantBeDeserializedException
      * @throws \JsonException
      */
@@ -54,7 +54,7 @@ final class SymfonyHttpClient implements HttpClientInterface
     }
 
     /**
-     * @throws BaseException
+     * @throws APIException
      * @throws \JsonException
      * @throws \Marek\Mailtrap\API\Exception\Serializer\ResponseCantBeDeserializedException
      */
@@ -64,7 +64,7 @@ final class SymfonyHttpClient implements HttpClientInterface
     }
 
     /**
-     * @throws BaseException
+     * @throws APIException
      * @throws \Marek\Mailtrap\API\Exception\Serializer\ResponseCantBeDeserializedException
      * @throws \JsonException
      */
@@ -74,7 +74,7 @@ final class SymfonyHttpClient implements HttpClientInterface
     }
 
     /**
-     * @throws BaseException
+     * @throws APIException
      * @throws \Marek\Mailtrap\API\Exception\Serializer\ResponseCantBeDeserializedException
      * @throws \JsonException
      */
@@ -92,7 +92,7 @@ final class SymfonyHttpClient implements HttpClientInterface
      * @param array<mixed> $body
      *
      * @throws \JsonException
-     * @throws BaseException
+     * @throws APIException
      * @throws \Marek\Mailtrap\API\Exception\Serializer\ResponseCantBeDeserializedException
      */
     private function doRequest(string $method, string $uri, array $body = []): HttpResponseInterface
@@ -120,7 +120,7 @@ final class SymfonyHttpClient implements HttpClientInterface
     }
 
     /**
-     * @throws BaseException
+     * @throws APIException
      */
     private function checkResponseAndThrowIfNecessary(ResponseInterface $response): void
     {
