@@ -6,6 +6,11 @@ namespace Marek\Mailtrap\Tests\Functional\Mock;
 
 use Marek\Mailtrap\API\Http\HttpResponseInterface;
 
+use function file_get_contents;
+use function json_decode;
+
+use const JSON_THROW_ON_ERROR;
+
 final class ResponseMock implements HttpResponseInterface
 {
     private array $content;
@@ -25,7 +30,7 @@ final class ResponseMock implements HttpResponseInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getContent(): array
     {

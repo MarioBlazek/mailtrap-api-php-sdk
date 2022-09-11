@@ -50,7 +50,7 @@
     "scripts": {
         "test": "@php vendor/bin/phpunit --colors=always",
         "phpstan": "@php vendor/bin/phpstan analyse -c phpstan.neon --level=8 --ansi src",
-        "fix": "@php vendor/bin/php-cs-fixer fix"
+        "format": "@php vendor/bin/php-cs-fixer fix"
     },
     "config": {
         "sort-packages": true

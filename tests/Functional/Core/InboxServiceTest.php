@@ -6,12 +6,17 @@ namespace Marek\Mailtrap\Tests\Functional\Core;
 
 use Marek\Mailtrap\API\Exception\Network\NotFoundException;
 use Marek\Mailtrap\API\Http\HttpClientInterface;
+use Marek\Mailtrap\API\InboxService as APIInboxService;
 use Marek\Mailtrap\API\Value\Request\InboxId;
 use Marek\Mailtrap\Core\Factory\SerializerFactory;
 use Marek\Mailtrap\Core\InboxService;
-use Marek\Mailtrap\API\InboxService as APIInboxService;
 use Marek\Mailtrap\Tests\Functional\Mock\ResponseMock;
 use PHPUnit\Framework\TestCase;
+
+use function file_get_contents;
+use function json_decode;
+
+use const JSON_THROW_ON_ERROR;
 
 final class InboxServiceTest extends TestCase
 {
@@ -32,42 +37,41 @@ final class InboxServiceTest extends TestCase
 
         $responseMock = ResponseMock::createFromFile($responseFile, 200);
 
-        $this->httpClient->expects($this->once())
+        $this->httpClient->expects(self::once())
             ->method('get')
             ->willReturn($responseMock);
 
-        $this->httpClient->expects($this->never())->method('post');
-        $this->httpClient->expects($this->never())->method('patch');
-        $this->httpClient->expects($this->never())->method('delete');
+        $this->httpClient->expects(self::never())->method('post');
+        $this->httpClient->expects(self::never())->method('patch');
+        $this->httpClient->expects(self::never())->method('delete');
 
         $inboxId = new InboxId(1644767);
 
         $inbox = $this->inboxService->getInbox($inboxId);
 
-        self::assertEquals($responseFileContent['id'], $inbox->id);
-        self::assertEquals($responseFileContent['company_id'], $inbox->companyId);
-        self::assertEquals($responseFileContent['name'], $inbox->name);
-        self::assertEquals($responseFileContent['username'], $inbox->username);
-        self::assertEquals($responseFileContent['password'], $inbox->password);
-        self::assertEquals($responseFileContent['max_size'], $inbox->maxSize);
-        self::assertEquals($responseFileContent['status'], $inbox->status);
-        self::assertEquals($responseFileContent['email_username'], $inbox->emailUsername);
-        self::assertEquals($responseFileContent['email_username_enabled'], $inbox->emailUsernameEnabled);
-        self::assertEquals($responseFileContent['sent_messages_count'], $inbox->sentMessagesCount);
-        self::assertEquals($responseFileContent['forwarded_messages_count'], $inbox->forwardedMessagesCount);
-        self::assertEquals($responseFileContent['used'], $inbox->used);
-        self::assertEquals($responseFileContent['forward_from_email_address'], $inbox->forwardFromEmailAddress);
-        self::assertEquals($responseFileContent['domain'], $inbox->domain);
-        self::assertEquals($responseFileContent['pop3_domain'], $inbox->pop3Domain);
-        self::assertEquals($responseFileContent['email_domain'], $inbox->emailDomain);
-        self::assertEquals($responseFileContent['emails_count'], $inbox->emailsCount);
-        self::assertEquals($responseFileContent['emails_unread_count'], $inbox->emailsUnreadCount);
-        self::assertEquals($responseFileContent['last_message_sent_at'], $inbox->lastMessageSentAt);
-        self::assertEquals($responseFileContent['max_message_size'], $inbox->maxMessageSize);
-        self::assertEquals($responseFileContent['has_inbox_address'], $inbox->hasInboxAddress);
-        self::assertEquals($responseFileContent['smtp_ports'], $inbox->smtpPorts);
-        self::assertEquals($responseFileContent['pop3_ports'], $inbox->pop3Ports);
-
+        self::assertSame($responseFileContent['id'], $inbox->id);
+        self::assertSame($responseFileContent['company_id'], $inbox->companyId);
+        self::assertSame($responseFileContent['name'], $inbox->name);
+        self::assertSame($responseFileContent['username'], $inbox->username);
+        self::assertSame($responseFileContent['password'], $inbox->password);
+        self::assertSame($responseFileContent['max_size'], $inbox->maxSize);
+        self::assertSame($responseFileContent['status'], $inbox->status);
+        self::assertSame($responseFileContent['email_username'], $inbox->emailUsername);
+        self::assertSame($responseFileContent['email_username_enabled'], $inbox->emailUsernameEnabled);
+        self::assertSame($responseFileContent['sent_messages_count'], $inbox->sentMessagesCount);
+        self::assertSame($responseFileContent['forwarded_messages_count'], $inbox->forwardedMessagesCount);
+        self::assertSame($responseFileContent['used'], $inbox->used);
+        self::assertSame($responseFileContent['forward_from_email_address'], $inbox->forwardFromEmailAddress);
+        self::assertSame($responseFileContent['domain'], $inbox->domain);
+        self::assertSame($responseFileContent['pop3_domain'], $inbox->pop3Domain);
+        self::assertSame($responseFileContent['email_domain'], $inbox->emailDomain);
+        self::assertSame($responseFileContent['emails_count'], $inbox->emailsCount);
+        self::assertSame($responseFileContent['emails_unread_count'], $inbox->emailsUnreadCount);
+        self::assertSame($responseFileContent['last_message_sent_at'], $inbox->lastMessageSentAt);
+        self::assertSame($responseFileContent['max_message_size'], $inbox->maxMessageSize);
+        self::assertSame($responseFileContent['has_inbox_address'], $inbox->hasInboxAddress);
+        self::assertSame($responseFileContent['smtp_ports'], $inbox->smtpPorts);
+        self::assertSame($responseFileContent['pop3_ports'], $inbox->pop3Ports);
     }
 
     public function testNotFound(): void
@@ -75,11 +79,11 @@ final class InboxServiceTest extends TestCase
         $this->expectException(NotFoundException::class);
         $this->expectExceptionMessage('Resource was not found');
 
-        $this->httpClient->expects($this->never())->method('post');
-        $this->httpClient->expects($this->never())->method('patch');
-        $this->httpClient->expects($this->never())->method('delete');
+        $this->httpClient->expects(self::never())->method('post');
+        $this->httpClient->expects(self::never())->method('patch');
+        $this->httpClient->expects(self::never())->method('delete');
 
-        $this->httpClient->expects($this->once())
+        $this->httpClient->expects(self::once())
             ->method('get')
             ->willThrowException(new NotFoundException());
 
