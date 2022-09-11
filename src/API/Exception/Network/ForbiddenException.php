@@ -6,7 +6,7 @@ namespace Marek\Mailtrap\API\Exception\Network;
 
 use Throwable;
 
-final class ForbiddenException extends BaseException
+final class ForbiddenException extends APIException
 {
     public function __construct(string $message = 'Access denied', int $code = 0, ?Throwable $previous = null)
     {

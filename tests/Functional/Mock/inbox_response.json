@@ -1,0 +1,33 @@
+{
+    "id": 1644767,
+    "company_id": 1023568,
+    "name": "Symfony skeleton",
+    "username": "odiau21312gyg1",
+    "password": "ijhuh223huihui",
+    "max_size": 400,
+    "status": "active",
+    "email_username": "4036424b38-308c56",
+    "email_username_enabled": false,
+    "sent_messages_count": 17,
+    "forwarded_messages_count": 0,
+    "used": true,
+    "forward_from_email_address": "a989208-i1644767@forward.mailtrap.info",
+    "domain": "smtp.mailtrap.io",
+    "pop3_domain": "pop3.mailtrap.io",
+    "email_domain": "inbox.mailtrap.io",
+    "emails_count": 400,
+    "emails_unread_count": 395,
+    "last_message_sent_at": "2022-09-08T05:41:56.000Z",
+    "smtp_ports": [
+        25,
+        465,
+        587,
+        2525
+    ],
+    "pop3_ports": [
+        1100,
+        9950
+    ],
+    "max_message_size": 10485760,
+    "has_inbox_address": false
+}

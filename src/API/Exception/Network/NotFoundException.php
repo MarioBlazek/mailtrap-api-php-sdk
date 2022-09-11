@@ -6,7 +6,7 @@ namespace Marek\Mailtrap\API\Exception\Network;
 
 use Throwable;
 
-final class NotFoundException extends BaseException
+final class NotFoundException extends APIException
 {
     public function __construct(string $message = 'Resource was not found', int $code = 0, ?Throwable $previous = null)
     {

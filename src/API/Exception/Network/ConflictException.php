@@ -6,7 +6,7 @@ namespace Marek\Mailtrap\API\Exception\Network;
 
 use Throwable;
 
-final class ConflictException extends BaseException
+final class ConflictException extends APIException
 {
     public function __construct(string $message = 'Request could not be completed due to a conflict with the current state of the target resource', int $code = 0, ?Throwable $previous = null)
     {
