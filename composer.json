@@ -32,7 +32,7 @@
         "phpstan/phpstan-phpunit": "^1.1",
         "phpstan/phpstan-strict-rules": "^1.4",
         "phpstan/phpstan-symfony": "^1.2",
-        "phpunit/phpunit": "^8.5",
+        "phpunit/phpunit": "^9.5",
         "roave/security-advisories": "dev-latest",
         "symfony/mailer": "^4.4 ||^5.4 || ^6.0",
         "symfony/var-dumper": "^4.4 ||^5.4 || ^6.0"
@@ -49,6 +49,7 @@
     },
     "scripts": {
         "test": "@php vendor/bin/phpunit --colors=always",
+        "test-coverage": "@php vendor/bin/phpunit --coverage-html build",
         "phpstan": "@php vendor/bin/phpstan analyse -c phpstan.neon --level=8 --ansi src",
         "format": "@php vendor/bin/php-cs-fixer fix"
     },
