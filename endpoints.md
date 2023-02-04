@@ -1,43 +1,43 @@
 # Endpoints
 
-| Endpoint description | Method | Endpoint URI | Implementation |
-|----------------------|--------|--------------|----------------|
-| Get all accounts | GET | /api/accounts | |
-| List all users in account | GET | /api/accounts/{account_id}/account_accesses | |
-| Remove user from the account | DELETE | /api/accounts/{account_id}/account_accesses/{account_access_id} |
-| Manage user or token permissions | PUT | /api/accounts/{account_id}/account_accesses/{account_access_id}/permissions/bulk | |
-| Get resources | GET | /api/accounts/{account_id}/permissions/resources |
-| Send email | POST | /api/send | |
-| Receive events | POST | /user-provided-url | |
-| Get all email campaigns for an account | GET | /api/accounts/{account_id}/email_campaigns | |
-| Get a simple campaign record for an account | GET | /api/accounts/{account_id}/simple_email_campaigns/{campaign_id} | |
-| Update a simple email campaign | PATCH | /api/accounts/{account_id}/simple_email_campaigns/{campaign_id} | |
-| Send email message | POST | /api/send/{inbox_id} | |
-| Create project | POST | /api/accounts/{account_id}/projects | |
-| Get a list of projects | GET | /api/accounts/{account_id}/projects | |
-| Get project by ID | GET | /api/accounts/{account_id}/projects/{project_id} | |
-| Update project | PATCH | /api/accounts/{account_id}/projects/{project_id} | |
-| Delete project | DELETE | /api/accounts/{account_id}/projects/{project_id} | |
-| Create an inbox | POST | /api/accounts/{account_id}/projects/{project_id}/inboxes | |
-| Get inbox attributes | GET | /api/accounts/{account_id}/inboxes/{inbox_id} | |
-| Delete an inbox | DELETE | /api/accounts/{account_id}/inboxes/{inbox_id} | |
-| Update an inbox | PATCH | /api/accounts/{account_id}/inboxes/{inbox_id} | |
-| Clean inbox | PATCH | /api/accounts/{account_id}/inboxes/{inbox_id}/clean | |
-| Mark as read | PATCH | /api/accounts/{account_id}/inboxes/{inbox_id}/all_read | |
-| Reset credentials | PATCH | /api/accounts/{account_id}/inboxes/{inbox_id}/reset_credentials | |
-| Enable email address | PATCH | /api/accounts/{account_id}/inboxes/{inbox_id}/toggle_email_username | |
-| Reset email address | PATCH | /api/accounts/{account_id}/inboxes/{inbox_id}/reset_email_username | |
-| Get a list of inboxes | GET | /api/accounts/{account_id}/inboxes | |
-| Show email message | GET | /api/accounts/{account_id}/inboxes/{inbox_id}/messages/{message_id} | |
-| Update message | PATCH | /api/accounts/{account_id}/inboxes/{inbox_id}/messages/{message_id} | |
-| Delete message | DELETE | /api/accounts/{account_id}/inboxes/{inbox_id}/messages/{message_id} | |
-| Get messages | GET | /api/accounts/{account_id}/inboxes/{inbox_id}/messages | |
-| Forward message | POST | /api/accounts/{account_id}/inboxes/{inbox_id}/messages/{message_id}/forward | |
-| Get message spam score | GET | /api/accounts/{account_id}/inboxes/{inbox_id}/messages/{message_id}/spam_report | |
-| Get text message | GET | /api/accounts/{account_id}/inboxes/{inbox_id}/messages/{message_id}/body.txt | |
-| Get raw message | GET | /api/accounts/{account_id}/inboxes/{inbox_id}/messages/{message_id}/body.raw | |
-| Get message source | GET | /api/accounts/{account_id}/inboxes/{inbox_id}/messages/{message_id}/body.htmlsource | |
-| Get HTML message | GET | /api/accounts/{account_id}/inboxes/{inbox_id}/messages/{message_id}/body.html | |
-| Get message as .eml | GET | /api/accounts/{account_id}/inboxes/{inbox_id}/messages/{message_id}/body.eml | |
-| Get attachments | GET | /api/accounts/{account_id}/inboxes/{inbox_id}/messages/{message_id}/attachments | |
-| Get single attachment | GET | /api/accounts/{account_id}/inboxes/{inbox_id}/messages/{message_id}/attachments/{attachment_id} | |
+| Endpoint description | Domain |Method | Endpoint URI | PHP SDK | Implemented | Tested |
+|----------------------|--------|-------|--------------|----------------|---------------|-------------|
+| Get all accounts | Accounts | GET | /api/accounts | AccountService::getAccounts() | | |
+| List all users in account | Accounts | GET | /api/accounts/{account_id}/account_accesses | AccountService::getUsersInAccount() | | |
+| Remove user from the account | Accounts | DELETE | /api/accounts/{account_id}/account_accesses/{account_access_id} | AccountService::removeUserFromAccount() | | |
+| Manage user or token permissions | Accounts | PUT | /api/accounts/{account_id}/account_accesses/{account_access_id}/permissions/bulk | AccountService::managePermissions() | | |
+| Get resources | Accounts | GET | /api/accounts/{account_id}/permissions/resources | AccountService::getResources() | | |
+| Send email | Emails | POST | /api/send | | | |
+| Receive events | Webhooks | POST | /user-provided-url | |
+| Get all email campaigns for an account | Campaigns | GET | /api/accounts/{account_id}/email_campaigns | |
+| Get a simple campaign record for an account | Campaigns | GET | /api/accounts/{account_id}/simple_email_campaigns/{campaign_id} | |
+| Update a simple email campaign | Campaigns | PATCH | /api/accounts/{account_id}/simple_email_campaigns/{campaign_id} | |
+| Send email message | Emails |POST | /api/send/{inbox_id} | |
+| Create project | Projects |  POST | /api/accounts/{account_id}/projects | ProjectsService::createProject() | [x] | [x] |
+| Get a list of projects | Projects | GET | /api/accounts/{account_id}/projects | ProjectService::getProjects() | [x] | [x] |
+| Get project by ID | Projects | GET | /api/accounts/{account_id}/projects/{project_id} | ProjectService::getProject() | [x] | [x] |
+| Update project | Projects | PATCH | /api/accounts/{account_id}/projects/{project_id} | ProjectService::updateProject() | [x] | [x] |
+| Delete project | Projects | DELETE | /api/accounts/{account_id}/projects/{project_id} | ProjectService::deleteProject() | [x] | [x] |
+| Create an inbox | Inboxes | POST | /api/accounts/{account_id}/projects/{project_id}/inboxes | InboxService::createInbox() | | |
+| Get inbox attributes | Inboxes | GET | /api/accounts/{account_id}/inboxes/{inbox_id} | InboxService::getInboxAttributes() | | |
+| Delete an inbox | Inboxes | DELETE | /api/accounts/{account_id}/inboxes/{inbox_id} | InboxService::deleteInbox() | | |
+| Update an inbox | Inboxes | PATCH | /api/accounts/{account_id}/inboxes/{inbox_id} | InboxService::updateInbox() | | |
+| Clean inbox | Inboxes | PATCH | /api/accounts/{account_id}/inboxes/{inbox_id}/clean | InboxService::clean() | |
+| Mark as read | Inboxes | PATCH | /api/accounts/{account_id}/inboxes/{inbox_id}/all_read | InboxService::markAllMessagesAsRead() | | |
+| Reset credentials | Inboxes | PATCH | /api/accounts/{account_id}/inboxes/{inbox_id}/reset_credentials | InboxService::resetCredentials() | | |
+| Enable email address | Inboxes | PATCH | /api/accounts/{account_id}/inboxes/{inbox_id}/toggle_email_username | InboxService::enableEmailAddress() | | |
+| Reset email address | Inboxes | PATCH | /api/accounts/{account_id}/inboxes/{inbox_id}/reset_email_username | InboxService::resetEmailUsername() | | |
+| Get a list of inboxes | Inboxes | GET | /api/accounts/{account_id}/inboxes | InboxService::getInboxes() | | |
+| Show email message | Message | GET | /api/accounts/{account_id}/inboxes/{inbox_id}/messages/{message_id} | MessageService::getMessage() | | |
+| Update message | Message | PATCH | /api/accounts/{account_id}/inboxes/{inbox_id}/messages/{message_id} | MessageService::updateMessage() | | | 
+| Delete message | Message | DELETE | /api/accounts/{account_id}/inboxes/{inbox_id}/messages/{message_id} | MessageService::deleteMessage()| | |
+| Get messages | Message | GET | /api/accounts/{account_id}/inboxes/{inbox_id}/messages | MessageService::getMessages() | | |
+| Forward message | Message | POST | /api/accounts/{account_id}/inboxes/{inbox_id}/messages/{message_id}/forward | MessageService::forwardMessage() | | |
+| Get message spam score | Message | GET | /api/accounts/{account_id}/inboxes/{inbox_id}/messages/{message_id}/spam_report | MessageService::getMessageSpamScore() | | |
+| Get text message | Message | GET | /api/accounts/{account_id}/inboxes/{inbox_id}/messages/{message_id}/body.txt | MessageService::getTextMessage() | | |
+| Get raw message | Message | GET | /api/accounts/{account_id}/inboxes/{inbox_id}/messages/{message_id}/body.raw | MessageService::getRawMessage() | | |
+| Get message source | Message | GET | /api/accounts/{account_id}/inboxes/{inbox_id}/messages/{message_id}/body.htmlsource | MessageService::getMessageSource() | | |
+| Get HTML message | Message | GET | /api/accounts/{account_id}/inboxes/{inbox_id}/messages/{message_id}/body.html | MessageService::getHtmlMessage() | | |
+| Get message as .eml | Message | GET | /api/accounts/{account_id}/inboxes/{inbox_id}/messages/{message_id}/body.eml | MessageService::getEmlMessage() | | |
+| Get attachments | Message | GET | /api/accounts/{account_id}/inboxes/{inbox_id}/messages/{message_id}/attachments | MessageService::getAttachments() | | |
+| Get single attachment | Message | GET | /api/accounts/{account_id}/inboxes/{inbox_id}/messages/{message_id}/attachments/{attachment_id} | MessageService::getAttachment() | | |

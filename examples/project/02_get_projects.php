@@ -7,17 +7,21 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 use Marek\Mailtrap\API\Exception\Serializer\ResponseCantBeDeserializedException;
 use Marek\Mailtrap\Core\Factory\ProjectServiceFactory;
 
-$projectService = ProjectServiceFactory::create(
-    \file_get_contents(__DIR__ . '/../api_token'),
-);
+$token = \file_get_contents(__DIR__ . '/../api_token');
+$token = trim(preg_replace('/\s+/', ' ', $token));
+
+$projectService = ProjectServiceFactory::create($token);
 
 try {
-    $projects = $projectService->getProjects();
+
+    $accountId = new \Marek\Mailtrap\API\Value\Request\AccountId(989208);
+
+    $projects = $projectService->getProjects($accountId);
 
     foreach ($projects as $project) {
         echo "Project name: {$project->id}\n";
         echo "Project name: {$project->name}\n";
-        echo "Project inboxes count: {$project->inboxCount}\n";
+        echo "Project inboxes count: {$project->getInboxCount()}\n";
         echo "-----------------------------\n";
     }
 } catch (ResponseCantBeDeserializedException $e) {
