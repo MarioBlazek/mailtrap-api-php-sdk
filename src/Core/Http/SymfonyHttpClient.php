@@ -15,6 +15,7 @@ use Marek\Mailtrap\API\Exception\Network\NotFoundException;
 use Marek\Mailtrap\API\Exception\Network\TooManyRequestsException;
 use Marek\Mailtrap\API\Exception\Network\UnauthorizedException;
 use Marek\Mailtrap\API\Exception\Network\UnprocessableEntityException;
+use Marek\Mailtrap\API\Exception\Serializer\ResponseCantBeDeserializedException;
 use Marek\Mailtrap\API\Http\HttpClientInterface;
 use Marek\Mailtrap\API\Http\HttpResponseInterface;
 use Marek\Mailtrap\API\Value\Authentication\ApiToken;
@@ -45,7 +46,7 @@ final class SymfonyHttpClient implements HttpClientInterface
 
     /**
      * @throws APIException
-     * @throws \Marek\Mailtrap\API\Exception\Serializer\ResponseCantBeDeserializedException
+     * @throws ResponseCantBeDeserializedException
      * @throws \JsonException
      */
     public function get(string $uri): HttpResponseInterface
@@ -56,7 +57,7 @@ final class SymfonyHttpClient implements HttpClientInterface
     /**
      * @throws APIException
      * @throws \JsonException
-     * @throws \Marek\Mailtrap\API\Exception\Serializer\ResponseCantBeDeserializedException
+     * @throws ResponseCantBeDeserializedException
      */
     public function post(string $uri, array $body = []): HttpResponseInterface
     {
@@ -65,7 +66,7 @@ final class SymfonyHttpClient implements HttpClientInterface
 
     /**
      * @throws APIException
-     * @throws \Marek\Mailtrap\API\Exception\Serializer\ResponseCantBeDeserializedException
+     * @throws ResponseCantBeDeserializedException
      * @throws \JsonException
      */
     public function patch(string $uri, array $body = []): HttpResponseInterface
@@ -75,7 +76,7 @@ final class SymfonyHttpClient implements HttpClientInterface
 
     /**
      * @throws APIException
-     * @throws \Marek\Mailtrap\API\Exception\Serializer\ResponseCantBeDeserializedException
+     * @throws ResponseCantBeDeserializedException
      * @throws \JsonException
      */
     public function delete(string $uri): HttpResponseInterface
@@ -93,7 +94,7 @@ final class SymfonyHttpClient implements HttpClientInterface
      *
      * @throws \JsonException
      * @throws APIException
-     * @throws \Marek\Mailtrap\API\Exception\Serializer\ResponseCantBeDeserializedException
+     * @throws ResponseCantBeDeserializedException
      */
     private function doRequest(string $method, string $uri, array $body = []): HttpResponseInterface
     {

@@ -6,6 +6,4 @@ namespace Marek\Mailtrap\API\Exception\Serializer;
 
 use Exception;
 
-final class ResponseCantBeDeserializedException extends Exception
-{
-}
+final class ResponseCantBeDeserializedException extends Exception {}

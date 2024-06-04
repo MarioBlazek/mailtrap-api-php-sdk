@@ -5,16 +5,16 @@ declare(strict_types=1);
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 use Marek\Mailtrap\API\Exception\Serializer\ResponseCantBeDeserializedException;
+use Marek\Mailtrap\API\Value\Request\AccountId;
 use Marek\Mailtrap\Core\Factory\ProjectServiceFactory;
 
 $token = \file_get_contents(__DIR__ . '/../api_token');
-$token = trim(preg_replace('/\s+/', ' ', $token));
+$token = \trim(\preg_replace('/\s+/', ' ', $token));
 
 $projectService = ProjectServiceFactory::create($token);
 
 try {
-
-    $accountId = new \Marek\Mailtrap\API\Value\Request\AccountId(989208);
+    $accountId = new AccountId(989208);
 
     $projects = $projectService->getProjects($accountId);
 

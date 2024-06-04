@@ -28,7 +28,7 @@ final class Inbox
     public int $emailsCount;
     public int $emailsUnreadCount;
     public ?string $lastMessageSentAt;
-//    public ?\DateTimeImmutable $lastMessageSentAt;
+    //    public ?\DateTimeImmutable $lastMessageSentAt;
 
     /**
      * @var array<int>

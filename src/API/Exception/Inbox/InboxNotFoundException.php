@@ -6,6 +6,4 @@ namespace Marek\Mailtrap\API\Exception\Inbox;
 
 use Exception;
 
-final class InboxNotFoundException extends Exception
-{
-}
+final class InboxNotFoundException extends Exception {}

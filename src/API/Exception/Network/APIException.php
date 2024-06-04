@@ -6,6 +6,4 @@ namespace Marek\Mailtrap\API\Exception\Network;
 
 use Exception;
 
-abstract class APIException extends Exception
-{
-}
+abstract class APIException extends Exception {}

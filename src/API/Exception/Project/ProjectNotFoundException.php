@@ -6,6 +6,4 @@ namespace Marek\Mailtrap\API\Exception\Project;
 
 use Exception;
 
-final class ProjectNotFoundException extends Exception
-{
-}
+final class ProjectNotFoundException extends Exception {}
