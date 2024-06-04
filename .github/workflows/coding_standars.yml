@@ -20,6 +20,6 @@ jobs:
               with:
                   repository: marioblazek/coding-standard
                   path: vendor/marioblazek/coding-standard
-            - uses: OskarStark/php-cs-fixer-ga@master
+            - uses: docker://oskarstark/php-cs-fixer-ga
               with:
                   args: --diff --dry-run
