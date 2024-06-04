@@ -38,10 +38,8 @@ final class Inboxes implements IteratorAggregate
      */
     public function getInboxByName(string $name): array
     {
-        return array_filter($this->inboxes, static function (Inbox $inbox) use ($name) {
-            if ($inbox->name === $name) {
-                return $inbox;
-            }
+        return array_filter($this->inboxes, static function (Inbox $inbox) use ($name): bool {
+            return $inbox->name === $name;
         });
     }
 }
